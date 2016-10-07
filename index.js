@@ -18,10 +18,18 @@
 //     db.close();
 // });
 
-const db = require('monk')('localhost/reccantiblog');
+// const db = require('monk')('localhost/reccantiblog');
+const db = require('mongoose');
 const app = require('koa')();
 const router = require('koa-router')();
 const views = require('koa-render');
+
+const Post = require('./models/post');
+
+db.connect('mongodb://localhost/reccantiblog');
+Post.remove({}, function(err) {
+    console.log('posts removed');
+})
 
 // define routes
 router
@@ -30,6 +38,14 @@ router
     })
     .get('posts', '/posts', function *(next) {
         this.body = "posts";
+    })
+    .post('post', '/post', function *(next) {
+        const post = new Post({
+            title: "Test Post",
+            contents: "success"
+        });
+        post.save();
+        console.log('post saved');
     });
 
 app.use(views('./views', 'pug'));
