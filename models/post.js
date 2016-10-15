@@ -17,6 +17,14 @@ var PostSchema = new mongoose.Schema({
 });
 
 /**
+ * Define a method to find posts based on 
+ * their ID
+ */
+PostSchema.findById = function (id, cb) {
+    return this.find({ _id: id }, cb);
+}
+
+/**
  * Define a method to find Posts based on
  * their title
  */

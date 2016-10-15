@@ -55,7 +55,7 @@ describe('Post', function () {
         };
         Post.create(post)
             .then(function (err, doc) {
-                return Post.findOne({ _id: doc._id });
+                return Post.findById(doc._id);
             })
             .then(function (err, doc) {
                 expect(doc).to.be.an('object');
