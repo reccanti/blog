@@ -4,7 +4,10 @@ const mongoose = require('mongoose');
  * describes the structure of a Post object
  */
 var PostSchema = new mongoose.Schema({
-    title: String,
+    title: {
+        type: String,
+        unique: true
+    },
     contents: String,
     created_at: {
         type: Date,
