@@ -6,7 +6,9 @@ const expect = require('chai').expect;
 describe('Post', function () {
     
     /**
-     * Set the promise library to Node's default
+     * Set the promise library to Node's default,
+     * connect to the database and
+     * clear any existing Posts
      */
     before(function (done) {
         db.Promise = global.Promise;
@@ -16,10 +18,14 @@ describe('Post', function () {
         });
     });
 
+    /**
+     * disconnect from the database after the tests
+     */
     after(function (done) {
         db.connection.close();
         done();
-    })
+    });
+
     /**
      * After each test, delete all Posts from the database
      */
@@ -127,4 +133,25 @@ describe('Post', function () {
     });
 
     // delete a post
+    it('expects to be able to delete a post', function () {
+        const post = {
+            'title': 'a blog post',
+            'contents': 'hello'
+        };
+        var id = null;
+        return Post.create(post)
+            .then(function (doc) {
+                id = doc._id
+                return Post.findById(id).exec();
+            })
+            .then(function (doc) {
+                return doc.remove();
+            })
+            .then(function (doc) {
+                return Post.findById(id).exec();
+            })
+            .then(function (doc) {
+                expect(doc).to.be.null;
+            })
+    });
 });
