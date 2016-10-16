@@ -152,6 +152,6 @@ describe('Post', function () {
             })
             .then(function (doc) {
                 expect(doc).to.be.null;
-            })
+            });
     });
 });
