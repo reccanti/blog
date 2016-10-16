@@ -26,7 +26,7 @@ const views = require('koa-render');
 
 const Post = require('./models/post');
 
-db.connect('mongodb://localhost/reccantiblog');
+db.connect(require('./config/config').dev.database);
 Post.remove({}, function(err) {
     console.log('posts removed');
 })

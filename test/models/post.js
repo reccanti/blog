@@ -12,7 +12,7 @@ describe('Post', function () {
      */
     before(function (done) {
         db.Promise = global.Promise;
-        db.connect('mongodb://localhost/reccantiblogtest');
+        db.connect(require('../../config/config').test.database);
         Post.remove({}, function () {
             done();  
         });
