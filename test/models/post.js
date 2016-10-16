@@ -101,6 +101,30 @@ describe('Post', function () {
                 expect(doc.contents).to.equal('hello');
             });
     });
+
     // edit a post
+    it('expects to be able to edit a post', function () {
+        const initialData = {
+            'title': 'a blog post',
+            'contents': 'hello'
+        };
+        return Post.create(initialData)
+            .then(function (doc) {
+                expect(doc.title).to.equal('a blog post');
+                expect(doc.contents).to.equal('hello');
+
+                doc.title = 'an updated title';
+                doc.contents = 'goodbye';
+                return doc.save();
+            })
+            .then(function (doc) {
+                return Post.findById(doc._id).exec();
+            })
+            .then(function (doc) {
+                expect(doc.title).to.equal('an updated title');
+                expect(doc.contents).to.equal('goodbye');
+            });
+    });
+
     // delete a post
 });
