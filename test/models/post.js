@@ -46,6 +46,27 @@ describe('Post', function () {
     });
 
     // should not be able to create a post with a duplicate name
+    it('expects to fail if the user tries to create a Post with duplicate name', function () {
+        const post1 = {
+            'title': 'a blog post',
+            'contents': 'post1'
+        };
+        const post2 = {
+            'title': 'a blog post',
+            'contents': 'post2'
+        };
+        return Post.create(post1)
+            .then(function (doc) {
+                return Post.create(post2);
+            })
+            .then(function (doc) {
+                // should not reach here
+                expect(doc).not.to.be.an('object');
+            })
+            .catch(function (err) {
+                expect(err).to.be.an.instanceOf(Error);
+            });
+    });
 
     // retrieve a post by ID
     it('expects to be able to find a post by its ID', function () {
