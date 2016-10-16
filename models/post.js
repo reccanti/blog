@@ -20,17 +20,17 @@ var PostSchema = new mongoose.Schema({
  * Define a method to find posts based on 
  * their ID
  */
-PostSchema.findById = function (id, cb) {
-    return this.find({ _id: id }, cb);
-}
+PostSchema.static('findById', function (id, cb) {
+    return this.findOne({ _id: id }, cb);
+});
 
 /**
  * Define a method to find Posts based on
  * their title
  */
-PostSchema.findByTitle = function (title, cb) {
-    return this.find({ title: title }, cb);
-};
+PostSchema.static('findByTitle', function (title, cb) {
+    return this.findOne({ title: title }, cb);
+});
 
 /**
  * Define the Post model
